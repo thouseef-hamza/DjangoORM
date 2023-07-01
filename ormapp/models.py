@@ -21,7 +21,7 @@ class Category(models.Model):
 
     def __str__(self):
         return self.category_name
-    
+     
 class Instructor(models.Model):
     name = models.CharField(max_length=100)
     bio = models.TextField()
@@ -53,7 +53,5 @@ class Chapter(models.Model):
     def __str__(self):
         return self.title
     
-
-
 
 
