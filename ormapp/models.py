@@ -53,5 +53,13 @@ class Chapter(models.Model):
     def __str__(self):
         return self.title
     
-
-
+class CategoryHero(models.Model):
+    name = models.CharField(max_length=100)
+    
+class Hero(models.Model):
+    name = models.CharField(max_length=100)
+    category = models.ForeignKey(CategoryHero, on_delete=models.CASCADE)
+    benevolence_factor = models.PositiveSmallIntegerField(
+    help_text="How benevolent this hero is?",
+    default=50
+    )

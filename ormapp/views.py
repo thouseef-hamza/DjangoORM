@@ -32,4 +32,21 @@ qs = Student.objects.filter(~Q(email__istartswith="t"))
 qs = Student.objects.exclude(email__istartswith="t")  
 """
             
-# 5  
+# 5  How to select some fields only in a queryset?
+"""
+q1 = Student.objects.filter(email__istartswith='t').values('email','phone_number') 
+<> Output will be list of dictonaries ----------------------------------------------->  
+q1 = Student.objects.filter(email__istartswith = 't').only('email')
+<> Output wiil be list of tuples ---------------------------------------------------->
+q1 = MyModel.objects.values_list('field1', 'field2')
+<> The only difference between 'only' and 'values' is 'only' also fetches the id.---->
+"""
+
+#6 How to do a subquery expression in Django?
+
+"""
+from django.db.models import Subquery
+q1 = Student.objects.all()
+StudentProfile.objects.filter(user_id__in=Subquery(q1.values('id')))    
+<QuerySet [<StudentProfile: StudentProfile object (1)>, <StudentProfile: StudentProfile object (2)>, <StudentProfile: StudentProfile object (3)>, <StudentProfile: StudentProfile object (4)>]>
+"""
