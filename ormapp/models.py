@@ -65,11 +65,23 @@ class People(models.Model):
 class CategoryHero(models.Model):
     name = models.CharField(max_length=100)
     
+
 class Hero(models.Model):
     name = models.CharField(max_length=100)
+    description = models.TextField(default='thiusi')
     category = models.ForeignKey(CategoryHero, on_delete=models.CASCADE)
     benevolence_factor = models.PositiveSmallIntegerField(
     help_text="How benevolent this hero is?",
     default=50
     )
+    
+    
+    def __str__(self):
+        return self.name
+    
+
+
+
+    
+
     

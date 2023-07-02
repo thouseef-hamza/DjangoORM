@@ -2,6 +2,12 @@ from django.shortcuts import render
 
 # Create your views here.
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+    Chapter 1   Querying And Filtering
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 # 1  How to find the query associated with a queryset?
 """
 queryset = Chapter.objects.all()
@@ -114,3 +120,46 @@ q1 = Course.objects.last()
 """
 
 # 12 Find rows which have duplicate field values
+"""
+duplicates = People.objects.values(
+    'first_name'
+).annotate(name_count=Count('first_name')).filter(name_count__gt=1)
+----------------------------------------------------------------------------------->
+records = People.objects.filter(first_name__in=[item['first_name'] for item in 
+duplicates])
+[item.id for item in records] 
+[3, 12, 14] showing the id for the 3 duplicates
+""" 
+
+# 13 How to find distinct field values from queryset?
+"""
+records = People.objects.values(  
+   'first_name'
+).annotate(
+   name_count = Count('first_name')
+).filter(name_count=1)
+"""
+
+# 14 How to group records in Django ORM?
+"""
+Using Aggregate Functions------------------->
+People.objects.all().aggregate(Avg('id'))
+People.objects.all().aggregate(Max('id'))
+People.objects.all().aggregate(Min('id'))
+People.objects.all().aggregate(Sum('id'))
+"""
+
+# 17 How to use arbitrary database functions in querysets? Func provides using arbitary(Lower,Coalesce,Max)
+"""
+from django.db.models import Func, F
+Hero.objects.annotate(like_zeus=Func(F('name'), function='levenshtein', template="
+%(function)s(%(expressions)s, 'Zeus')"))
+
+class LevenshteinLikeZeus(Func):
+    function='levenshtein'
+    template="%(function)s(%(expressions)s, 'Zeus')"
+"""
+
+#=========================================================================================================================
+
+

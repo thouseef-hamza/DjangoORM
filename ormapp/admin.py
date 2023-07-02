@@ -10,3 +10,5 @@ admin.site.register(Course)
 admin.site.register(Instructor)
 admin.site.register(Category)
 admin.site.register(People)
+
+
