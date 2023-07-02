@@ -52,6 +52,15 @@ class Chapter(models.Model):
 
     def __str__(self):
         return self.title
+class People(models.Model):
+    id = models.IntegerField(primary_key=True)
+    username = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.EmailField(max_length=100)
+
+    def __str__(self):
+        return self.username
     
 class CategoryHero(models.Model):
     name = models.CharField(max_length=100)
@@ -63,3 +72,4 @@ class Hero(models.Model):
     help_text="How benevolent this hero is?",
     default=50
     )
+    

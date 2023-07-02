@@ -31,22 +31,86 @@ qs = Student.objects.filter(~Q(email__istartswith="t"))
 """
 qs = Student.objects.exclude(email__istartswith="t")  
 """
-            
-# 5  How to select some fields only in a queryset?
+# 5  How to do union of two querysets from same or different models?
+""" 
+<> In this query it will work, if the table have not same number of column it will not union---------------------->
+q1 = Student.objects.filter(id__lte=2)
+q2 = Student.objects.filter(id__gte=3) 
+q2.union(q1)
+
+<> if the table have no same number of column!
+Student.objects.all().values('email').union(StudentProfile.objects.all().values('first_name'))
+                                                 |
+values() ==> + Returns Dictionaries              |   values_list()==> + Returns Tuples
+             + can handle additional operations  |                   + Does Not Support Opperations
+               (e.g., filtering, aggregations)   |
+                                                 |
+"""
+# 6  How to select some fields only in a queryset?
 """
 q1 = Student.objects.filter(email__istartswith='t').values('email','phone_number') 
-<> Output will be list of dictonaries ----------------------------------------------->  
+<> Output will be list of dictonaries -----------------------------------------------> 
+ 
 q1 = Student.objects.filter(email__istartswith = 't').only('email')
 <> Output wiil be list of tuples ---------------------------------------------------->
+
 q1 = MyModel.objects.values_list('field1', 'field2')
 <> The only difference between 'only' and 'values' is 'only' also fetches the id.---->
 """
 
-#6 How to do a subquery expression in Django?
+# 7 How to do a subquery expression in Django?
 
 """
+------------------------------------------------------------------->
 from django.db.models import Subquery
 q1 = Student.objects.all()
 StudentProfile.objects.filter(user_id__in=Subquery(q1.values('id')))    
-<QuerySet [<StudentProfile: StudentProfile object (1)>, <StudentProfile: StudentProfile object (2)>, <StudentProfile: StudentProfile object (3)>, <StudentProfile: StudentProfile object (4)>]>
+-------------------------------------------------------------------->
+from django.db.models import Subquery,OuterRef
+hero_qs = Hero.objects.filter(
+category=OuterRef("pk")
+).order_by("-benevolence_factor")
+CategoryHero.objects.all().annotate( 
+   most_benevolent_hero=Subquery(
+       hero_qs.values('name')[:1]
+   )
+)
 """
+
+# 8  How to filter a queryset with criteria based on comparing their field values
+
+"""
+<<<<>>>>    F is For Comparing
+
+<> first_name==last_name
+from django.db.models import F
+StudentProfile.objects.filter(last_name=F("first_name"))
+
+<> First Name And Last Name Starts With Same First Letter
+from django.db.models.functions import Substr
+StudentProfile.objects.annotate(first=Substr("first_name", 1, 1), last=Substr("last_name",1,1)).filter(first = F("last"))
+"""
+
+# 9  How to filter FileField without any file?
+"""
+no_files_objects = MyModel.objects.filter(Q(file='')|Q(file=None))
+
+"""
+
+# 10  How to perform join operations in django ORM?
+"""
+<> One To One Gield Only For select_related()
+a1 = Student.objects.select_related('studentprofile') 
+"""
+
+# 11 How to find second largest record using Django ORM ?
+"""
+q1 = Course.objects.order_by("-end_date")[1]
+q1.instructor
+
+<<<>>>  first(), last()  <<<>>>>
+q1 = Course.objects.first()
+q1 = Course.objects.last()
+"""
+
+# 12 Find rows which have duplicate field values
