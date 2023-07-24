@@ -14,6 +14,9 @@ class StudentProfile(models.Model):
     first_name = models.CharField(max_length=30,blank=True)
     last_name=models.CharField(max_length=50,blank=True)
     address = models.TextField()
+    
+    def __str__(self):
+        return self.first_name
 
     
 class Category(models.Model):

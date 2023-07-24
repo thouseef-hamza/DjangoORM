@@ -160,6 +160,35 @@ class LevenshteinLikeZeus(Func):
     template="%(function)s(%(expressions)s, 'Zeus')"
 """
 
-#=========================================================================================================================
+# =========================================================================================================================
+# ========================================== Ordering Things ==============================================================
+# =========================================================================================================================
 
+# 1 How to order a queryset in ascending or descending order?
+#  Ascending ======>
+"""
+Course.objects.all().order_by('created_at') 
+"""
+# Descending ========>
+"""
+Course.objects.all().order_by('-created_at') 
+"""
+# 2 How to order a queryset in case insensitive manner?
+"""
+from django.db.models.functions import Lower
+StudentProfile.objects.annotate(uname=Lower('first_name')).order_by('uname').values_list('first_name', flat=True)  
+"""
 
+# 4 How to order on a field from a related model (with a foreign key)?
+"""
+Course.objects.all().order_by('category__category_name','title')
+
+Using the double undertscore, you can order on a field
+from a related model.
+"""
+
+# 5 How to order on an annotated field?
+"""
+from django.db.models import Count
+Course.objects.annotate(hero_count=Count('category')).order_by('-hero_count') 
+"""
