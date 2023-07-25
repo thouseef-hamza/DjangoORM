@@ -1,6 +1,7 @@
 from django.db import models
 # from django.contrib.auth.models import User
 from ormapp.models import Student
+
 # Create your models here.
 
 class UserParent(models.Model):
@@ -39,3 +40,8 @@ class Store(models.Model):
      
      def __str__(self):
           return self.name
+
+class Phone(models.Model):
+     phone_number = models.CharField(max_length=13)
+     student = models.OneToOneField(Student,on_delete=models.CASCADE,related_name='phone')
+     

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Employee,Book
+from .models import Employee,Book,Phone
+from ormapp.models import Student
 # Create your views here.
 """
 def Home(request):
@@ -18,5 +19,15 @@ def Home(request):
      books = Book.objects.all().prefetch_related('store_set') # Many to Many Field
      for book in books:
           print(book.store_set.all())          # joining in python and return # here all relationship works
+          
+# One To One
+"""
+def my_view(request):
+     user_phone = Student.objects.get(id=5).phone.phone_number # Because of One to One We Can Take Phone Object
+     print(user_phone)
+     
+     user = Phone.objects.get(id=1).student.phone_number # Reverse
+     print(user,",============================)")
+"""
 # 1 How to model one to one relationships?
 
