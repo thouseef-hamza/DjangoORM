@@ -137,3 +137,7 @@ Table: Orders              Table: Products                      Table: Order_Det
 <> There must not be any transitive dependency
 """
 
+arr =[1,3,5]
+
+def test(arr):
+      X  = {x for x in arr}
