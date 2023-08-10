@@ -19,5 +19,6 @@ from django.shortcuts import render
 """
 <> Portabilty :- we can develop application using one database ,for production we can switch to another
 <> Django MVT Architecture :- seperation for model part enhances code maintainabilty and readabilty to handles fb operaions.
-<> 
+<> Security :- Automatically escapes parameter to reduce sql injections
+<> Relationship :- make relationship between models for join 
 """

@@ -105,7 +105,7 @@ no_files_objects = MyModel.objects.filter(Q(file='')|Q(file=None))
 
 # 10  How to perform join operations in django ORM?
 """
-<> One To One Gield Only For select_related()
+<> One To One Field Only For select_related()
 a1 = Student.objects.select_related('studentprofile') 
 """
 
