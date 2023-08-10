@@ -11,6 +11,7 @@ class Teacher(models.Model):
      def __str__(self) -> str:
           return self.teacher_name
      
+     
 
 class Course(models.Model):
     teacher = models.ForeignKey(Teacher,on_delete=models.CASCADE,blank=True)
